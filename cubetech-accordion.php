@@ -3,7 +3,7 @@
 Plugin Name: cubetech Accordion
 Plugin URI: http://www.cubetech.ch
 Description: cubetech Accordion - create accordions in an easy admin panel, group them and add with a shortcode
-Version: 1.0.2
+Version: 1.0.3
 Author: cubetech GmbH
 Author URI: http://www.cubetech.ch
 */
@@ -102,7 +102,7 @@ function cubetech_accordion_dialog() {
 	<?php
 }
 
-add_filter( 'template_include', 'cubetech_accordion_template', 1 );
+add_filter( 'single_template', 'cubetech_accordion_template');
 
 function cubetech_accordion_template($template_path) {
     if ( get_post_type() == 'cubetech_accordion' ) {
@@ -118,5 +118,11 @@ function cubetech_accordion_template($template_path) {
     }
     return $template_path;
 }
+
+// Flush rules on activation
+register_activation_hook(__FILE__, 'cubetech_accordion_activate_post_type'); 
+
+// On deactivation flush rules
+register_deactivation_hook(__FILE__, 'cubetech_accordion_destroy_post_type');
 
 ?>
